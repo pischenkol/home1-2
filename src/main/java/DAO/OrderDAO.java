@@ -36,5 +36,8 @@ public class OrderDAO {
     public Set<Order> getMore25thWhithCustAndCustRep(){
         return null;
     }
+    public Set<Order> getWithNewSalesrep(){
+        return null;
+    }
 
 }

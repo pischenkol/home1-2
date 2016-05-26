@@ -29,4 +29,7 @@ public class OfficeDAO {
     public Set<Customer> getWhithMgr600(){
         return null;
     }
+    public Set<Customer> getCityWhithSalesMoreTarget(){
+        return null;
+    }
 }

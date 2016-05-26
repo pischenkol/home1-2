@@ -23,7 +23,37 @@ public class SalesrepDAO {
     public Set<Customer> getAll(){
         return null;
     }
-    public Set<Customer> getAllWhithCityAndRegion(){
+    public Set<Customer> getWhithCityAndRegion(){
+        return null;
+    }
+    public Set<Customer> getWhithQuotaMoreOffice(){
+        return null;
+    }
+    public Set<Customer> getWhithSalesMore350th(){
+        return null;
+    }
+    public Set<Customer> getWhithNameCitySales(){
+        return null;
+    }
+    public Set<Customer> getWhithOffice(){
+        return null;
+    }
+    public Set<Customer> getWhithBoss(){
+        return null;
+    }
+    public Set<Customer> getWhithSalesMoreBoss(){
+        return null;
+    }
+    public Set<Customer> getWhithOfficeDiferentThanBoss(){
+        return null;
+    }
+    public Set<Customer> getWhithSalesAndBirthday(){
+        return null;
+    }
+    public Set<Customer> getWhithCitys(){
+        return null;
+    }
+    public Set<Customer> getWhithCity(){
         return null;
     }
 }
