@@ -13,6 +13,78 @@ public class Salesrep {
     private String title;
     private Date hireDate;
     private int manager;
-    private double qota;
+    private double quota;
     private double sales;
+
+    public int getEmptlNum() {
+        return emptlNum;
+    }
+
+    public void setEmptlNum(int emptlNum) {
+        this.emptlNum = emptlNum;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public int getRepOffice() {
+        return repOffice;
+    }
+
+    public void setRepOffice(int repOffice) {
+        this.repOffice = repOffice;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Date getHireDate() {
+        return hireDate;
+    }
+
+    public void setHireDate(Date hireDate) {
+        this.hireDate = hireDate;
+    }
+
+    public int getManager() {
+        return manager;
+    }
+
+    public void setManager(int manager) {
+        this.manager = manager;
+    }
+
+    public double getQuota() {
+        return quota;
+    }
+
+    public void setQuota(double quota) {
+        this.quota = quota;
+    }
+
+    public double getSales() {
+        return sales;
+    }
+
+    public void setSales(double sales) {
+        this.sales = sales;
+    }
 }
