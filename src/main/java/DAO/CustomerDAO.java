@@ -3,6 +3,7 @@ package DAO;
 import models.Customer;
 
 import java.sql.*;
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -10,64 +11,126 @@ import java.util.Set;
  * Created by appleface on 26.05.16.
  */
 public class CustomerDAO {
-    public final String url = "jdbc:mysql://192.168.33.10:3306/test";
-    public final String login = "root";
-    public final String password = "my-new-password";
+
+    private final Connection connection;
+
+    public CustomerDAO(Connection connection) {
+        this.connection = connection;
+    }
+
 
     public boolean save(Customer customer) {
-        Boolean bl = false;
-        try (Connection connection = DriverManager.getConnection(url,login,password)) {
-            Statement st = connection.createStatement();
-            bl = st.execute("insert into CUSTOMERS(COMPANY, CUST_REP, CREDIT_LIMIT) values(%s,'%i','%d')");
-            return bl;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-
-        return bl;
+        String sql = String.format("insert into CUSTOMER(COMPANY,CUST_REP,CREDIT_LIMIT) values(%s,'%s','%d')",
+                customer.getCompany(), customer.getCustRep(), customer.getCreditLimit());
+        return executeSql(sql);
     }
 
     public boolean update(Customer customer) {
-        int bl = 0;
-        try (Connection connection = DriverManager.getConnection(url,login,password)) {
-            Statement st = connection.createStatement();
-            bl = st.executeUpdate("insert into CUSTOMERS(COMPANY, CUST_REP, CREDIT_LIMIT) values(%s,'%i','%d')");
-            return bl!=0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-
-        return false;
+        String sql = String.format("update CUSTOMER set COMPANY='%s', CUST_REP='%s' CREDIT_LIMIT='%d' where CUST_NUM=%s",
+                customer.getCompany(), customer.getCustRep(), customer.getCreditLimit(), customer.getId());
+        return executeSql(sql);
     }
 
     public boolean delete(Customer customer) {
-        return true;
+        String sql = String.format("delete from CUSTOMER where CUST_NUM=%s",
+                customer.getId());
+        return executeSql(sql);
     }
 
     public Customer getById(int id) {
+        String sql = String.format("select CUST_NUM,COMPANY,CUST_REP,CREDIT_LIMIT from CUSTOMER where CUST_NUM=%d",
+                id);
+        Statement statement = null;
+        try {
+            statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            Customer customer = null;
+            if (resultSet.next()) {
+                customer = new Customer();
+                customer.setId(resultSet.getInt("CUST_NUM"));
+                customer.setCompany(resultSet.getString("COMPANY"));
+                customer.setCustRep(resultSet.getInt("CUST_REP"));
+                customer.setCreditLimit(resultSet.getDouble("CREDIT_LIMIT"));
+            }
+            resultSet.close();
+            return customer;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         return null;
     }
 
     public Set<Customer> getAll() {
-        return null;
+        String sql = "select OFFICE,CITY,REGION from OFFICES";
+        Statement statement = null;
+       Set<Customer> customers = new HashSet<>();
+        try {
+            statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                Customer customer = new Customer();
+                customer.setId(resultSet.getInt("CUST_NUM"));
+                customer.setCompany(resultSet.getString("COMPANY"));
+                customer.setCustRep(resultSet.getInt("CUST_REP"));
+                customer.setCreditLimit(resultSet.getDouble("CREDIT_LIMIT"));
+                customers.add(customer);
+            }
+            resultSet.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return customers;
     }
-
-    public Set<Customer> get2103() {
+    public Customer get2103() {
+        String sql = String.format("select CUST_NUM,COMPANY,CUST_REP,CREDIT_LIMIT from CUSTOMER where CUST_NUM=2103");
+        Statement statement = null;
+        try {
+            statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            Customer customer = null;
+            if (resultSet.next()) {
+                customer = new Customer();
+                customer.setId(resultSet.getInt("CUST_NUM"));
+                customer.setCompany(resultSet.getString("COMPANY"));
+                customer.setCustRep(resultSet.getInt("CUST_REP"));
+                customer.setCreditLimit(resultSet.getDouble("CREDIT_LIMIT"));
+            }
+            resultSet.close();
+            return customer;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         return null;
-    }
 
+    }
 
     private boolean executeSql(String sql) {
         int count = 0;
         Statement statement = null;
-        Connection connection = null;
-        try {
-            connection = DriverManager.getConnection(url,login,password);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
         try {
             statement = connection.createStatement();
             count = statement.executeUpdate(sql);
