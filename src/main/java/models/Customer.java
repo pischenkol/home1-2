@@ -1,5 +1,8 @@
 package models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by appleface on 26.05.16.
  */
@@ -8,6 +11,7 @@ public class Customer {
     private String company;
     private int custRep;
     private double creditLimit;
+    private List<Salesrep> salesrepSet = new ArrayList<>();
 
     public int getId() {
         return id;

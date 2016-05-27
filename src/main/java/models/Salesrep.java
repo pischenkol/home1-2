@@ -6,7 +6,7 @@ import java.util.Date;
  * Created by appleface on 26.05.16.
  */
 public class Salesrep {
-    private int emptlNum;
+    private int id;
     private String name;
     private int age;
     private int repOffice;
@@ -16,12 +16,12 @@ public class Salesrep {
     private double quota;
     private double sales;
 
-    public int getEmptlNum() {
-        return emptlNum;
+    public int getId() {
+        return id;
     }
 
-    public void setEmptlNum(int emptlNum) {
-        this.emptlNum = emptlNum;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
