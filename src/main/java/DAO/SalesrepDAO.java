@@ -1,6 +1,7 @@
 package DAO;
 
 import models.Customer;
+import models.Office;
 import models.Salesrep;
 
 import java.sql.Connection;
@@ -110,22 +111,24 @@ public class SalesrepDAO {
         return salesreps;
     }
 
-    public Customer get2103() {
-        String sql = String.format("select CUST_NUM,COMPANY,CUST_REP,CREDIT_LIMIT from CUSTOMER where CUST_NUM=2103");
+
+    public Set<Salesrep> getWhithCityAndRegion(){
+        String sql = "SELECT NAMЕ , CITY , REGION FROM SALESREPS , OFFICES WHERE REP_OFFICE = OFFICE";
         Statement statement = null;
+        Set<Salesrep> salesreps = new HashSet<>();
         try {
             statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
-            Customer customer = null;
-            if (resultSet.next()) {
-                customer = new Customer();
-                customer.setId(resultSet.getInt("CUST_NUM"));
-                customer.setCompany(resultSet.getString("COMPANY"));
-                customer.setCustRep(resultSet.getInt("CUST_REP"));
-                customer.setCreditLimit(resultSet.getDouble("CREDIT_LIMIT"));
+            while (resultSet.next()) {
+                Salesrep salesrep = new Salesrep();
+                Office office = new Office();
+                salesrep.setName(resultSet.getString("NAME"));
+                office.setCity(resultSet.getString("CITY"));
+                office.setRegion(resultSet.getString("REGION"));
+                salesrep.getOffices().add(office);
+                salesreps.add(salesrep);
             }
             resultSet.close();
-            return customer;
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -137,43 +140,129 @@ public class SalesrepDAO {
                 }
             }
         }
-        return null;
+        return salesreps;
+    }
+    public Set<Salesrep> getWhithQuotaMoreOffice(){
+        String sql = "SELECT NAMЕ, QUOTA, CITY, TARGET FROM  SALESREPS , OFFICES WHERE QUOTA > TARGET";
+        Statement statement = null;
+        Set<Salesrep> salesreps = new HashSet<>();
+        try {
+            statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                Salesrep salesrep = new Salesrep();
+                Office office = new Office();
+                salesrep.setName(resultSet.getString("NAME"));
+                salesrep.setTitle(resultSet.getString("TITLE"));
+                office.setCity(resultSet.getString("CITY"));
+                office.setTarget(resultSet.getDouble("TARGET"));
+                salesrep.getOffices().add(office);
+                salesreps.add(salesrep);
+            }
+            resultSet.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return salesreps;
+    }
+    public Set<Salesrep> getWhithSalesMore350th(){
+        String sql = "SELECT NАМЕ , SALES FROM SALESREPS WHERE SALES > 350000.00";
+        Statement statement = null;
+        Set<Salesrep> salesreps = new HashSet<>();
+        try {
+            statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                Salesrep salesrep = new Salesrep();
+                salesrep.setName(resultSet.getString("NAME"));
+                salesrep.setSales(resultSet.getDouble("SALES"));
 
+                salesreps.add(salesrep);
+            }
+            resultSet.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return salesreps;
+    }
+    public Set<Salesrep> getWhithNameCitySales(){
+        String sql = "SELECT NAMЕ, CITY, SALES FROM  SALESREPS , OFFICES ";
+        Statement statement = null;
+        Set<Salesrep> salesreps = new HashSet<>();
+        try {
+            statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                Salesrep salesrep = new Salesrep();
+                Office office = new Office();
+                salesrep.setName(resultSet.getString("NAME"));
+                office.setCity(resultSet.getString("CITY"));
+                office.setSales(resultSet.getDouble("SALES"));
+                salesrep.getOffices().add(office);
+                salesreps.add(salesrep);
+            }
+            resultSet.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return salesreps;
+    }
+    public Set<Salesrep> getWhithOffice(){
+        String sql = "SELECT SALESREPS . * , CITY , REGION FROM SALESREPS, OFFICES WНERE REP_OFFICE = OFFICE";
+        Statement statement = null;
+        Set<Salesrep> salesreps = new HashSet<>();
+        try {
+            statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                Salesrep salesrep = new Salesrep();
+                Office office = new Office();
+                salesrep.setName(resultSet.getString("NAME"));
+                office.setCity(resultSet.getString("CITY"));
+                office.setRegion(resultSet.getString("REGION"));
+                salesrep.getOffices().add(office);
+                salesreps.add(salesrep);
+            }
+            resultSet.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return salesreps;
     }
 
-    public Set<Customer> getWhithCityAndRegion(){
-        return null;
-    }
-    public Set<Customer> getWhithQuotaMoreOffice(){
-        return null;
-    }
-    public Set<Customer> getWhithSalesMore350th(){
-        return null;
-    }
-    public Set<Customer> getWhithNameCitySales(){
-        return null;
-    }
-    public Set<Customer> getWhithOffice(){
-        return null;
-    }
-    public Set<Customer> getWhithBoss(){
-        return null;
-    }
-    public Set<Customer> getWhithSalesMoreBoss(){
-        return null;
-    }
-    public Set<Customer> getWhithOfficeDiferentThanBoss(){
-        return null;
-    }
-    public Set<Customer> getWhithSalesAndBirthday(){
-        return null;
-    }
-    public Set<Customer> getWhithCitys(){
-        return null;
-    }
-    public Set<Customer> getWhithCity(){
-        return null;
-    }
+
 
     private boolean executeSql(String sql) {
         int count = 0;

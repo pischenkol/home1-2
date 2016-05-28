@@ -1,6 +1,8 @@
 package models;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by appleface on 26.05.16.
@@ -15,6 +17,24 @@ public class Salesrep {
     private int manager;
     private double quota;
     private double sales;
+    private Set<Salesrep> salesreps= new HashSet<>();
+    private Set<Office> offices = new HashSet<>();
+
+    public Set<Salesrep> getSalesreps() {
+        return salesreps;
+    }
+
+    public void setSalesreps(Set<Salesrep> salesreps) {
+        this.salesreps = salesreps;
+    }
+
+    public Set<Office> getOffices() {
+        return offices;
+    }
+
+    public void setOffices(Set<Office> offices) {
+        this.offices = offices;
+    }
 
     public int getId() {
         return id;
