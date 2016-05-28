@@ -1,6 +1,8 @@
 package models;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by appleface on 26.05.16.
@@ -14,6 +16,33 @@ public class Order {
     private String product;
     private int qty;
     private double amount;
+    private Set<Customer> customers = new HashSet<>();
+    private Set<Salesrep> salesreps = new HashSet<>();
+    private Set<Product> products = new HashSet<>();
+
+    public Set<Customer> getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(Set<Customer> customers) {
+        this.customers = customers;
+    }
+
+    public Set<Salesrep> getSalesreps() {
+        return salesreps;
+    }
+
+    public void setSalesreps(Set<Salesrep> salesreps) {
+        this.salesreps = salesreps;
+    }
+
+    public Set<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Set<Product> products) {
+        this.products = products;
+    }
 
     public int getId() {
         return id;

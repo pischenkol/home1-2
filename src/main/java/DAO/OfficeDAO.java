@@ -112,6 +112,7 @@ public class OfficeDAO {
                 office.setCity(resultSet.getString("CITY"));
                 salesrep.setName(resultSet.getString("NAME"));
                 office.setId(resultSet.getInt("TITLE"));
+                office.getSalesrepSet().add(salesrep);
                 offices.add(office);
             }
             resultSet.close();
@@ -144,6 +145,7 @@ public class OfficeDAO {
                 office.setCity(resultSet.getString("CITY"));
                 salesrep.setName(resultSet.getString("NAME"));
                 office.setId(resultSet.getInt("TITLE"));
+                office.getSalesrepSet().add(salesrep);
 
                 offices.add(office);
             }
@@ -171,8 +173,6 @@ public class OfficeDAO {
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
                 Office office = new Office();
-                Salesrep salesrep = new Salesrep();
-
                 office.setCity(resultSet.getString("CITY"));
                 office.setSales(resultSet.getDouble("SALES"));
 

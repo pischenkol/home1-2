@@ -1,7 +1,7 @@
 package models;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by appleface on 26.05.16.
@@ -13,7 +13,15 @@ public class Office {
     private int mgr;
     private double target;
     private double sales;
-    private List<Salesrep> salesrepSet = new ArrayList<>();
+    private Set<Salesrep> salesrepSet = new HashSet<>();
+
+    public Set<Salesrep> getSalesrepSet() {
+        return salesrepSet;
+    }
+
+    public void setSalesrepSet(Set<Salesrep> salesrepSet) {
+        this.salesrepSet = salesrepSet;
+    }
 
     public int getId() {
         return id;
