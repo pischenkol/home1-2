@@ -7,6 +7,8 @@ import org.junit.Test;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.junit.Assert.*;
 
@@ -14,7 +16,7 @@ import static org.junit.Assert.*;
  * Created by appleface on 28.05.16.
  */
 public class CustomerDAOTest {
-    private static final java.lang.String DB_URL = "jdbc:mysql://localhost/test";
+    private static final java.lang.String DB_URL = "jdbc:mysql://192.168.33.10/test";
     private static final String USER = "root";
     private static final String PASS = "my-new-password";
 
@@ -22,8 +24,7 @@ public class CustomerDAOTest {
 
     @Test
     public void testSave() throws Exception {
-        Connection connection = DriverManager.getConnection(DB_URL,USER,PASS);
-        CustomerDAO cust = new CustomerDAO(connection);
+
 
 
     }
@@ -43,21 +44,35 @@ public class CustomerDAOTest {
         Connection connection = DriverManager.getConnection(DB_URL,USER,PASS);
         CustomerDAO cust = new CustomerDAO(connection);
 
-         Customer testCust = cust.getById(2101);
+        Customer testCust = cust.getById(2101);
         String actual = testCust.getCompany();
         String expected = "Jones Mfg.";
-        Assert.assertEquals(actual,expected);
+        Assert.assertEquals(expected,actual);
 
 
     }
 
     @Test
     public void testGetAll() throws Exception {
+        Connection connection = DriverManager.getConnection(DB_URL,USER,PASS);
+        CustomerDAO cust = new CustomerDAO(connection);
+        Set<Customer> customers = new HashSet<>();
+        customers.addAll(cust.getAll());
+        int actual  =customers.size();
+        int expected = 24;
+        Assert.assertEquals(expected,actual);
 
     }
 
     @Test
     public void testGet2103() throws Exception {
+        Connection connection = DriverManager.getConnection(DB_URL,USER,PASS);
+        CustomerDAO cust = new CustomerDAO(connection);
+
+        Customer testCust = cust.get2103();
+        String actual = testCust.getCompany();
+        String expected = "Acme Mfg.";
+        Assert.assertEquals(expected,actual);
 
     }
 }

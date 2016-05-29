@@ -20,25 +20,25 @@ public class CustomerDAO {
 
 
     public boolean save(Customer customer) {
-        String sql = String.format("insert into CUSTOMER(COMPANY,CUST_REP,CREDIT_LIMIT) values(%s,'%s','%d')",
+        String sql = String.format("insert into CUSTOMERS (COMPANY,CUST_REP,CREDIT_LIMIT) values(%s,'%s','%d')",
                 customer.getCompany(), customer.getCustRep(), customer.getCreditLimit());
         return executeSql(sql);
     }
 
     public boolean update(Customer customer) {
-        String sql = String.format("update CUSTOMER set COMPANY='%s', CUST_REP='%s' CREDIT_LIMIT='%d' where CUST_NUM=%s",
+        String sql = String.format("update CUSTOMERS set COMPANY='%s', CUST_REP='%s' CREDIT_LIMIT='%d' where CUST_NUM=%s",
                 customer.getCompany(), customer.getCustRep(), customer.getCreditLimit(), customer.getId());
         return executeSql(sql);
     }
 
     public boolean delete(Customer customer) {
-        String sql = String.format("delete from CUSTOMER where CUST_NUM=%s",
+        String sql = String.format("delete from CUSTOMERS where CUST_NUM=%s",
                 customer.getId());
         return executeSql(sql);
     }
 
     public Customer getById(int id) {
-        String sql = String.format("select CUST_NUM,COMPANY,CUST_REP,CREDIT_LIMIT from CUSTOMER where CUST_NUM=%d",
+        String sql = String.format("select CUST_NUM,COMPANY,CUST_REP,CREDIT_LIMIT from CUSTOMERS where CUST_NUM=%d",
                 id);
         Statement statement = null;
         try {
@@ -69,7 +69,7 @@ public class CustomerDAO {
     }
 
     public Set<Customer> getAll() {
-        String sql = "select OFFICE,CITY,REGION from OFFICES";
+        String sql = "select * from CUSTOMERS";
         Statement statement = null;
        Set<Customer> customers = new HashSet<>();
         try {
@@ -98,7 +98,7 @@ public class CustomerDAO {
         return customers;
     }
     public Customer get2103() {
-        String sql = String.format("select CUST_NUM,COMPANY,CUST_REP,CREDIT_LIMIT from CUSTOMER where CUST_NUM=2103");
+        String sql = String.format("select CUST_NUM,COMPANY,CUST_REP,CREDIT_LIMIT from CUSTOMERS where CUST_NUM=2103");
         Statement statement = null;
         try {
             statement = connection.createStatement();
