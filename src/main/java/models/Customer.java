@@ -1,17 +1,17 @@
 package models;
 
+import javax.persistence.Entity;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by appleface on 26.05.16.
- */
+@Entity
+@javax.persistence.Table(name = "CUSTOMERS")
 public class Customer {
     private int id;
     private String company;
     private int custRep;
     private double creditLimit;
-    private List<Salesrep> salesrepSet = new ArrayList<>();
+    private List<Salesrep> salesrepSet = new ArrayList<Salesrep>();
 
     public int getId() {
         return id;

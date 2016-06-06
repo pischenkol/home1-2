@@ -1,8 +1,9 @@
 package models;
 
-/**
- * Created by appleface on 26.05.16.
- */
+import javax.persistence.Entity;
+
+@Entity
+@javax.persistence.Table(name = "PRODUCTS")
 public class Product {
     private String id;
     private String productId;

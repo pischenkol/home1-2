@@ -1,19 +1,19 @@
 package models;
 
+import javax.persistence.Entity;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Created by appleface on 26.05.16.
- */
+@Entity
+@javax.persistence.Table(name = "OFFICES")
 public class Office {
     private int id;
     private String city;
     private String region;
-    private int mgr;
+    private Manager manager;
     private double target;
     private double sales;
-    private Set<Salesrep> salesrepSet = new HashSet<>();
+    private Set<Salesrep> salesrepSet = new HashSet<Salesrep>();
 
     public Set<Salesrep> getSalesrepSet() {
         return salesrepSet;
@@ -47,13 +47,14 @@ public class Office {
         this.region = region;
     }
 
-    public int getMgr() {
-        return mgr;
+    public Manager getManager() {
+        return manager;
     }
 
-    public void setMgr(int mgr) {
-        this.mgr = mgr;
+    public void setManager(Manager manager) {
+        this.manager = manager;
     }
+
 
     public double getTarget() {
         return target;

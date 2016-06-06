@@ -1,24 +1,49 @@
 package models;
 
+
+
+import javax.persistence.Entity;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.*;
 
-/**
- * Created by appleface on 26.05.16.
- */
+@Entity
+@javax.persistence.Table(name = "SALESREPS")
 public class Salesrep {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "EMPL_NUM")
     private int id;
+    @Column(name = "NAME")
     private String name;
+
+    @Column(name = "AGE")
     private int age;
+
+    @Column(name = "NAME")
     private int repOffice;
+
+    @Column(name = "NAME")
     private String title;
+
+    @Column(name = "NAME")
     private Date hireDate;
-    private int manager;
+
+    @OneToOne
+    @JoinColumn(name = "MGR")
+    private Manager manager;
+
+    @Column(name = "NAME")
     private double quota;
+
+    @Column(name = "NAME")
     private double sales;
-    private Set<Salesrep> salesreps= new HashSet<>();
-    private Set<Office> offices = new HashSet<>();
+
+
+    private Set<Salesrep> salesreps;
+
+    private Set<Office> offices;
 
     public Set<Salesrep> getSalesreps() {
         return salesreps;
@@ -84,11 +109,11 @@ public class Salesrep {
         this.hireDate = hireDate;
     }
 
-    public int getManager() {
+    public Manager getManager() {
         return manager;
     }
 
-    public void setManager(int manager) {
+    public void setManager(Manager manager) {
         this.manager = manager;
     }
 
