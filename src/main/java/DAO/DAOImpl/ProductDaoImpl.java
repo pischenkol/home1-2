@@ -34,10 +34,7 @@ public class ProductDaoImpl implements ProductDao{
         return executeSql(sql);
     }
 
-    @Override
-    public boolean delete(int id) {
-        return false;
-    }
+
 
     public boolean delete(Product product) {
         String sql = String.format("delete from PRODUCTS where MFR_ID=%d",

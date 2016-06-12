@@ -1,12 +1,13 @@
 package models;
 
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "SALESREPS")
 public class Manager {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "EMPL_NUM")
     private int id;
 

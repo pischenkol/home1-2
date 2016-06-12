@@ -36,10 +36,7 @@ public class OrderDaoImpl implements OrderDao{
         return executeSql(sql);
     }
 
-    @Override
-    public boolean delete(int id) {
-        return false;
-    }
+
 
     public boolean delete(Order order) {
         String sql = String.format("delete from ORDERS where ORDER_NUM=%d",

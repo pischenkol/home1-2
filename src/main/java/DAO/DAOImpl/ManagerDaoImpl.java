@@ -17,10 +17,7 @@ public class ManagerDaoImpl implements ManagerDao {
         return false;
     }
 
-    @Override
-    public boolean delete(int id) {
-        return false;
-    }
+
 
     @Override
     public boolean delete(Manager id) {

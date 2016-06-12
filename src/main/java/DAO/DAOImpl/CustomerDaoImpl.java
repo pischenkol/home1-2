@@ -32,13 +32,9 @@ public class CustomerDaoImpl implements CustomerDao{
         return executeSql(sql);
     }
 
-    @Override
-    public boolean delete(int id) {
-        String sql = String.format("delete from CUSTOMERS where CUST_NUM=%s",
-               id);
-        return executeSql(sql);
 
-    }
+
+
 
     public boolean delete(Customer customer) {
         String sql = String.format("delete from CUSTOMERS where CUST_NUM=%s",

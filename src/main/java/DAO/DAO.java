@@ -8,7 +8,6 @@ import java.util.Objects;
 public interface Dao<T> {
     public boolean save(T objects);
     public boolean update(T objects);
-    public boolean delete(int id);
     public boolean delete(T id);
     public T getById(int id);
 

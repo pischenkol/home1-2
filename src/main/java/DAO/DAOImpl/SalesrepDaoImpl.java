@@ -35,18 +35,9 @@ public class SalesrepDaoImpl implements SalesrepDao{
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(Salesrep id) {
         return false;
     }
-
-    public boolean delete(Salesrep salesrep) {
-        String sql = String.format("delete from SALESREPS where EMPL_NUM=%s",
-                salesrep.getId());
-        return executeSql(sql);
-    }
-
-
-
 
 
     public Salesrep getById(int id) {
@@ -162,7 +153,6 @@ public class SalesrepDaoImpl implements SalesrepDao{
                 salesrep.setName(resultSet.getString("NAME"));
                 salesrep.setTitle(resultSet.getString("TITLE"));
                 office.setCity(resultSet.getString("CITY"));
-                office.setTarget(resultSet.getDouble("TARGET"));
                 salesrep.getOffices().add(office);
                 salesreps.add(salesrep);
             }
@@ -220,7 +210,6 @@ public class SalesrepDaoImpl implements SalesrepDao{
                 Office office = new Office();
                 salesrep.setName(resultSet.getString("NAME"));
                 office.setCity(resultSet.getString("CITY"));
-                office.setSales(resultSet.getDouble("SALES"));
                 salesrep.getOffices().add(office);
                 salesreps.add(salesrep);
             }

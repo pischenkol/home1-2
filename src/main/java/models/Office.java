@@ -1,27 +1,23 @@
 package models;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@javax.persistence.Table(name = "OFFICES")
+@Table(name = "OFFICES")
 public class Office {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "OFFICE")
     private int id;
+    @Column(name = "CITY")
     private String city;
+    @Column(name = "REGION")
     private String region;
+    @OneToOne
+    @JoinColumn(name = "MGR")
     private Manager manager;
-    private double target;
-    private double sales;
-    private Set<Salesrep> salesrepSet = new HashSet<Salesrep>();
-
-    public Set<Salesrep> getSalesrepSet() {
-        return salesrepSet;
-    }
-
-    public void setSalesrepSet(Set<Salesrep> salesrepSet) {
-        this.salesrepSet = salesrepSet;
-    }
 
     public int getId() {
         return id;
@@ -53,22 +49,5 @@ public class Office {
 
     public void setManager(Manager manager) {
         this.manager = manager;
-    }
-
-
-    public double getTarget() {
-        return target;
-    }
-
-    public void setTarget(double target) {
-        this.target = target;
-    }
-
-    public double getSales() {
-        return sales;
-    }
-
-    public void setSales(double sales) {
-        this.sales = sales;
     }
 }
