@@ -77,7 +77,7 @@ public class CustomerDaoImpl implements CustomerDao{
     public Set<Customer> getAll() {
         String sql = "select * from CUSTOMERS";
         Statement statement = null;
-       Set<Customer> customers = new HashSet<>();
+       Set<Customer> customers = new HashSet<Customer>();
         try {
             statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
