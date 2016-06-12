@@ -1,6 +1,6 @@
 package DAO;
 
-import models.Customer;
+import DAO.DAOImpl.OfficeDaoImpl;
 import models.Office;
 import org.junit.Assert;
 import org.junit.Before;
@@ -11,8 +11,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by appleface on 28.05.16.
@@ -52,7 +50,7 @@ public class OfficeDAOTest {
 
     @Test
     public void testGetById() throws Exception {
-        OfficeDAO officeDAO = new OfficeDAO(getConnection());
+        OfficeDaoImpl officeDAO = new OfficeDaoImpl(getConnection());
 
 
         Office testCust = officeDAO.getById(11);
@@ -65,7 +63,7 @@ public class OfficeDAOTest {
     @Test
     public void testGetAll() throws Exception {
 
-        OfficeDAO office = new OfficeDAO(getConnection());
+        OfficeDaoImpl office = new OfficeDaoImpl(getConnection());
         Set<Office> offices = new HashSet<>();
         offices.addAll(office.getAll());
         int actual  = offices.size();

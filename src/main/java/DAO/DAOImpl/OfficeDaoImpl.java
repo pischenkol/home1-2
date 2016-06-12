@@ -1,5 +1,6 @@
-package DAO;
+package DAO.DAOImpl;
 
+import DAO.SpecialDao.OfficeDao;
 import models.Office;
 import models.Salesrep;
 
@@ -11,11 +12,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-public class OfficeDAO {
+public class OfficeDaoImpl implements OfficeDao{
 
     private final Connection connection;
 
-    public OfficeDAO(Connection connection) {
+    public OfficeDaoImpl(Connection connection) {
         this.connection = connection;
     }
 
@@ -30,6 +31,11 @@ public class OfficeDAO {
         String sql = String.format("update OFFICES set CITY='%s', REGION='%s' where OFFICE=%d",
                 office.getCity(), office.getRegion(), office.getId());
         return executeSql(sql);
+    }
+
+    @Override
+    public boolean delete(int id) {
+        return false;
     }
 
     public boolean delete(Office office) {

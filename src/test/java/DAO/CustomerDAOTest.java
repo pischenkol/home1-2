@@ -1,16 +1,14 @@
 package DAO;
 
+import DAO.DAOImpl.CustomerDaoImpl;
 import models.Customer;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.HashSet;
 import java.util.Set;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by appleface on 28.05.16.
@@ -42,7 +40,7 @@ public class CustomerDAOTest {
     @Test
     public void testGetById() throws Exception {
         Connection connection = DriverManager.getConnection(DB_URL,USER,PASS);
-        CustomerDAO cust = new CustomerDAO(connection);
+        CustomerDaoImpl cust = new CustomerDaoImpl(connection);
 
         Customer testCust = cust.getById(2101);
         String actual = testCust.getCompany();
@@ -55,7 +53,7 @@ public class CustomerDAOTest {
     @Test
     public void testGetAll() throws Exception {
         Connection connection = DriverManager.getConnection(DB_URL,USER,PASS);
-        CustomerDAO cust = new CustomerDAO(connection);
+        CustomerDaoImpl cust = new CustomerDaoImpl(connection);
         Set<Customer> customers = new HashSet<>();
         customers.addAll(cust.getAll());
         int actual  =customers.size();
@@ -67,7 +65,7 @@ public class CustomerDAOTest {
     @Test
     public void testGet2103() throws Exception {
         Connection connection = DriverManager.getConnection(DB_URL,USER,PASS);
-        CustomerDAO cust = new CustomerDAO(connection);
+        CustomerDaoImpl cust = new CustomerDaoImpl(connection);
 
         Customer testCust = cust.get2103();
         String actual = testCust.getCompany();

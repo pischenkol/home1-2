@@ -1,5 +1,6 @@
-package DAO;
+package DAO.DAOImpl;
 
+import DAO.SpecialDao.OrderDao;
 import models.Customer;
 import models.Order;
 import models.Product;
@@ -15,10 +16,10 @@ import java.util.Set;
 /**
  * Created by appleface on 26.05.16.
  */
-public class OrderDAO {
+public class OrderDaoImpl implements OrderDao{
     private final Connection connection;
 
-    public OrderDAO(Connection connection) {
+    public OrderDaoImpl(Connection connection) {
         this.connection = connection;
     }
 
@@ -33,6 +34,11 @@ public class OrderDAO {
         String sql = String.format("update ORDERS set ORDER_DATE='%d',CUST,REP='%d',MFR='%s', PRODUCT='%s',QTY='%d', AMOUNT='%f' where ORDER_NUM=%d",
                 order.getOrderDate(), order.getCast(), order.getRep(), order.getMfr(), order.getProduct(), order.getQty(), order.getAmount(), order.getId());
         return executeSql(sql);
+    }
+
+    @Override
+    public boolean delete(int id) {
+        return false;
     }
 
     public boolean delete(Order order) {

@@ -1,5 +1,6 @@
-package DAO;
+package DAO.DAOImpl;
 
+import DAO.SpecialDao.CustomerDao;
 import models.Customer;
 
 import java.sql.*;
@@ -10,11 +11,11 @@ import java.util.Set;
 /**
  * Created by appleface on 26.05.16.
  */
-public class CustomerDAO {
+public class CustomerDaoImpl implements CustomerDao{
 
     private final Connection connection;
 
-    public CustomerDAO(Connection connection) {
+    public CustomerDaoImpl(Connection connection) {
         this.connection = connection;
     }
 
@@ -29,6 +30,11 @@ public class CustomerDAO {
         String sql = String.format("update CUSTOMERS set COMPANY='%s', CUST_REP='%s' CREDIT_LIMIT='%d' where CUST_NUM=%s",
                 customer.getCompany(), customer.getCustRep(), customer.getCreditLimit(), customer.getId());
         return executeSql(sql);
+    }
+
+    @Override
+    public boolean delete(int id) {
+        return false;
     }
 
     public boolean delete(Customer customer) {

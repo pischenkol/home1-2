@@ -21,23 +21,23 @@ public class Salesrep {
     @Column(name = "AGE")
     private int age;
 
-    @Column(name = "NAME")
+    @Column(name = "REP_OFFICE")
     private int repOffice;
 
-    @Column(name = "NAME")
+    @Column(name = "TITLE")
     private String title;
 
-    @Column(name = "NAME")
+    @Column(name = "HIRE_DATE")
     private Date hireDate;
 
     @OneToOne
     @JoinColumn(name = "MGR")
     private Manager manager;
 
-    @Column(name = "NAME")
+    @Column(name = "QUOTA")
     private double quota;
 
-    @Column(name = "NAME")
+    @Column(name = "SELES")
     private double sales;
 
 

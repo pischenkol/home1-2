@@ -1,5 +1,6 @@
-package DAO;
+package DAO.DAOImpl;
 
+import DAO.SpecialDao.ProductDao;
 import models.Product;
 
 import java.sql.Connection;
@@ -12,11 +13,11 @@ import java.util.Set;
 /**
  * Created by appleface on 26.05.16.
  */
-public class ProductDAO {
+public class ProductDaoImpl implements ProductDao{
 
     private final Connection connection;
 
-    public ProductDAO(Connection connection) {
+    public ProductDaoImpl(Connection connection) {
         this.connection = connection;
     }
 
@@ -31,6 +32,11 @@ public class ProductDAO {
         String sql = String.format("update PRODUCTS set  PRODUCT_ID='%d', DESCRIPTION='%s',PRICE='%f', QTY_ON_HAND='%d' where MFR_ID=%d",
                 product.getProductId(), product.getDescription(), product.getPrice(), product.getQtyOnHand(), product.getId());
         return executeSql(sql);
+    }
+
+    @Override
+    public boolean delete(int id) {
+        return false;
     }
 
     public boolean delete(Product product) {

@@ -1,6 +1,6 @@
-package DAO;
+package DAO.DAOImpl;
 
-import models.Customer;
+import DAO.SpecialDao.SalesrepDao;
 import models.Office;
 import models.Salesrep;
 
@@ -14,10 +14,10 @@ import java.util.Set;
 /**
  * Created by appleface on 26.05.16.
  */
-public class SalesrepDAO {
+public class SalesrepDaoImpl implements SalesrepDao{
     private final Connection connection;
 
-    public SalesrepDAO(Connection connection) {
+    public SalesrepDaoImpl(Connection connection) {
         this.connection = connection;
     }
 
@@ -34,11 +34,20 @@ public class SalesrepDAO {
         return executeSql(sql);
     }
 
+    @Override
+    public boolean delete(int id) {
+        return false;
+    }
+
     public boolean delete(Salesrep salesrep) {
         String sql = String.format("delete from SALESREPS where EMPL_NUM=%s",
                 salesrep.getId());
         return executeSql(sql);
     }
+
+
+
+
 
     public Salesrep getById(int id) {
         String sql = String.format("select * from SALESREPS where EMPL_NUM=%d",
@@ -56,7 +65,6 @@ public class SalesrepDAO {
                 salesrep.setRepOffice(resultSet.getInt("REP_OFFICE"));
                 salesrep.setTitle(resultSet.getString("TITLE"));
                 salesrep.setHireDate(resultSet.getDate("HIRE_DATE"));
-                salesrep.setManager(resultSet.getInt("MANAGER"));
                 salesrep.setQuota(resultSet.getDouble("QUOTA"));
                 salesrep.setSales(resultSet.getDouble("SALES"));
             }
@@ -91,7 +99,6 @@ public class SalesrepDAO {
                 salesrep.setRepOffice(resultSet.getInt("REP_OFFICE"));
                 salesrep.setTitle(resultSet.getString("TITLE"));
                 salesrep.setHireDate(resultSet.getDate("HIRE_DATE"));
-                salesrep.setManager(resultSet.getInt("MANAGER"));
                 salesrep.setQuota(resultSet.getDouble("QUOTA"));
                 salesrep.setSales(resultSet.getDouble("SALES"));
                 salesreps.add(salesrep);
@@ -234,7 +241,7 @@ public class SalesrepDAO {
     public Set<Salesrep> getWhithOffice(){
         String sql = "SELECT SALESREPS . * , CITY , REGION FROM SALESREPS, OFFICES WНERE REP_OFFICE = OFFICE";
         Statement statement = null;
-        Set<Salesrep> salesreps = new HashSet<>();
+        Set<Salesrep> salesreps = new HashSet<Salesrep>();
         try {
             statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
