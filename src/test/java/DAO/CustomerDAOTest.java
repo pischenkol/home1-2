@@ -57,7 +57,7 @@ public class CustomerDAOTest {
         Set<Customer> customers = new HashSet<>();
         customers.addAll(cust.getAll());
         int actual  =customers.size();
-        int expected = 24;
+        int expected = 21;
         Assert.assertEquals(expected,actual);
 
     }

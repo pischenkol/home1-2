@@ -87,7 +87,7 @@ public class SalesrepDaoImpl implements SalesrepDao{
     public Set<Salesrep> getAll() {
         String sql = "select * from SALESREPS";
         Statement statement = null;
-        Set<Salesrep> salesreps = new HashSet<>();
+        Set<Salesrep> salesreps = new HashSet<Salesrep>();
         try {
             statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
@@ -122,7 +122,7 @@ public class SalesrepDaoImpl implements SalesrepDao{
     public Set<Salesrep> getWhithCityAndRegion(){
         String sql = "SELECT NAMЕ , CITY , REGION FROM SALESREPS , OFFICES WHERE REP_OFFICE = OFFICE";
         Statement statement = null;
-        Set<Salesrep> salesreps = new HashSet<>();
+        Set<Salesrep> salesreps = new HashSet<Salesrep>();
         try {
             statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
@@ -152,7 +152,7 @@ public class SalesrepDaoImpl implements SalesrepDao{
     public Set<Salesrep> getWhithQuotaMoreOffice(){
         String sql = "SELECT NAMЕ, QUOTA, CITY, TARGET FROM  SALESREPS , OFFICES WHERE QUOTA > TARGET";
         Statement statement = null;
-        Set<Salesrep> salesreps = new HashSet<>();
+        Set<Salesrep> salesreps = new HashSet<Salesrep>();
         try {
             statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
@@ -183,7 +183,7 @@ public class SalesrepDaoImpl implements SalesrepDao{
     public Set<Salesrep> getWhithSalesMore350th(){
         String sql = "SELECT NАМЕ , SALES FROM SALESREPS WHERE SALES > 350000.00";
         Statement statement = null;
-        Set<Salesrep> salesreps = new HashSet<>();
+        Set<Salesrep> salesreps = new HashSet<Salesrep>();
         try {
             statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
@@ -211,7 +211,7 @@ public class SalesrepDaoImpl implements SalesrepDao{
     public Set<Salesrep> getWhithNameCitySales(){
         String sql = "SELECT NAMЕ, CITY, SALES FROM  SALESREPS , OFFICES ";
         Statement statement = null;
-        Set<Salesrep> salesreps = new HashSet<>();
+        Set<Salesrep> salesreps = new HashSet<Salesrep>();
         try {
             statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);

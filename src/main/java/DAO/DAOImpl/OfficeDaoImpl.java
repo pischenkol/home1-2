@@ -77,7 +77,7 @@ public class OfficeDaoImpl implements OfficeDao{
     public Set<Office> getAll() {
         String sql = "select OFFICE,CITY,REGION from OFFICES";
         Statement statement = null;
-        Set<Office> offices = new HashSet<>();
+        Set<Office> offices = new HashSet<Office>();
         try {
             statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);

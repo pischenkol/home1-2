@@ -34,7 +34,10 @@ public class CustomerDaoImpl implements CustomerDao{
 
     @Override
     public boolean delete(int id) {
-        return false;
+        String sql = String.format("delete from CUSTOMERS where CUST_NUM=%s",
+               id);
+        return executeSql(sql);
+
     }
 
     public boolean delete(Customer customer) {
