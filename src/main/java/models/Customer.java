@@ -1,15 +1,21 @@
 package models;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @javax.persistence.Table(name = "CUSTOMERS")
 public class Customer {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "CUST_NUM")
     private int id;
+    @Column(name = "COMPANY")
     private String company;
+    @Column(name = "CUST_REP")
     private int custRep;
+    @Column(name = "CREDIT_LIMIT")
     private double creditLimit;
     private List<Salesrep> salesrepSet = new ArrayList<Salesrep>();
 

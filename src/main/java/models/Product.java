@@ -1,14 +1,21 @@
 package models;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 @Entity
 @javax.persistence.Table(name = "PRODUCTS")
 public class Product {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="MFR_ID")
     private String id;
+    @Column(name="PRODUCT_ID")
     private String productId;
+    @Column(name="DESCRIPTION")
     private String description;
+    @Column(name="PRICE")
     private double price;
+    @Column(name="QTY_ON_HAND")
     private int qtyOnHand;
     public String getProductId() {
         return productId;

@@ -1,6 +1,6 @@
 package models;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -8,13 +8,23 @@ import java.util.Set;
 @Entity
 @javax.persistence.Table(name = "ORDERS")
 public class Order {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ORDER_NUM")
     private int id;
+    @Column(name = "ORDER_DATE")
     private Date orderDate;
+    @Column(name = "CAST")
     private int cast;
+    @Column(name = "REP")
     private int rep;
+    @Column(name = "MTF")
     private String mfr;
+    @Column(name = "PRODUCT")
     private String product;
+    @Column(name = "QTY")
     private int qty;
+    @Column(name = "AMOUNT")
     private double amount;
     private Set<Customer> customers;
     private Set<Salesrep> salesreps;
