@@ -1,4 +1,4 @@
-package DAO.DAOImpl;
+package DAO.HibernateDaoImpl;
 
 import com.mysql.jdbc.Connection;
 

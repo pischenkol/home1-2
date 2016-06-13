@@ -1,6 +1,6 @@
 package DAO;
 
-import DAO.DAOImpl.CustomerDaoImpl;
+import DAO.JdbcDaoImpl.CustomerDaoJdbc;
 import models.Customer;
 import org.junit.Assert;
 import org.junit.Test;
@@ -40,7 +40,7 @@ public class CustomerDAOTest {
     @Test
     public void testGetById() throws Exception {
         Connection connection = DriverManager.getConnection(DB_URL,USER,PASS);
-        CustomerDaoImpl cust = new CustomerDaoImpl(connection);
+        CustomerDaoJdbc cust = new CustomerDaoJdbc(connection);
 
         Customer testCust = cust.getById(2101);
         String actual = testCust.getCompany();
@@ -53,7 +53,7 @@ public class CustomerDAOTest {
     @Test
     public void testGetAll() throws Exception {
         Connection connection = DriverManager.getConnection(DB_URL,USER,PASS);
-        CustomerDaoImpl cust = new CustomerDaoImpl(connection);
+        CustomerDaoJdbc cust = new CustomerDaoJdbc(connection);
         Set<Customer> customers = new HashSet<>();
         customers.addAll(cust.getAll());
         int actual  =customers.size();
@@ -65,7 +65,7 @@ public class CustomerDAOTest {
     @Test
     public void testGet2103() throws Exception {
         Connection connection = DriverManager.getConnection(DB_URL,USER,PASS);
-        CustomerDaoImpl cust = new CustomerDaoImpl(connection);
+        CustomerDaoJdbc cust = new CustomerDaoJdbc(connection);
 
         Customer testCust = cust.get2103();
         String actual = testCust.getCompany();

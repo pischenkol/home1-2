@@ -1,4 +1,4 @@
-package DAO.DAOImpl;
+package DAO.HibernateDaoImpl;
 
 import DAO.SpecialDao.OrderDao;
 import models.Customer;
@@ -16,11 +16,11 @@ import java.util.Set;
 /**
  * Created by appleface on 26.05.16.
  */
-public class OrderDaoImpl implements OrderDao{
-    private final Connection connection;
+public class OrderDaoHB implements OrderDao{
+    private final SessionHolder holder;
 
-    public OrderDaoImpl(Connection connection) {
-        this.connection = connection;
+    OrderDaoHB(SessionHolder holder) {
+        this.holder = holder;
     }
 
 
@@ -47,9 +47,7 @@ public class OrderDaoImpl implements OrderDao{
     public Order getById(int id) {
         String sql = String.format("select ORDER_DATE,CUST,REP,MFR, PRODUCT,QTY, AMOUNT from ORDERS where ORDER_NUM=%d",
                 id);
-        Statement statement = null;
-        try {
-            statement = connection.createStatement();
+        try(Statement statement =holder.obtainConnection().createStatement()) {
             ResultSet resultSet = statement.executeQuery(sql);
             Order order = null;
             if (resultSet.next()) {
@@ -67,24 +65,14 @@ public class OrderDaoImpl implements OrderDao{
             return order;
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
         }
         return null;
     }
 
     public Set<Order> getAll() {
         String sql = "select * from OFFICES";
-        Statement statement = null;
         Set<Order> orders = new HashSet<>();
-        try {
-            statement = connection.createStatement();
+        try (Statement statement =holder.obtainConnection().createStatement()){
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
                 Order order = new Order();
@@ -99,14 +87,6 @@ public class OrderDaoImpl implements OrderDao{
             resultSet.close();
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
         }
         return orders;
     }
@@ -114,10 +94,8 @@ public class OrderDaoImpl implements OrderDao{
 
     public Set<Order> getWhithCustomer() {
         String sql = "SELECT ORDER_NUM ,  AMOUNT, COMPANY, CREDIT_LIMIT FROM ORDERS ,CUSTOMERS WHERE CUST=CUST_NUM";
-        Statement statement = null;
         Set<Order> orders = new HashSet<>();
-        try {
-            statement = connection.createStatement();
+        try (Statement statement =holder.obtainConnection().createStatement()){
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
                 Order order = new Order();
@@ -133,14 +111,6 @@ public class OrderDaoImpl implements OrderDao{
             resultSet.close();
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
         }
         return orders;
 
@@ -148,10 +118,8 @@ public class OrderDaoImpl implements OrderDao{
 
     public Set<Order> getWhithDescription() {
         String sql = "SELECT ORDER_NUM , AМOUNT, DESCRIPTION FROM ORDERS JOIN PRODUCTS ON MFR = MFR_ID AND PRODUCT = PRODUCT_ID";
-        Statement statement = null;
         Set<Order> orders = new HashSet<>();
-        try {
-            statement = connection.createStatement();
+        try (Statement statement =holder.obtainConnection().createStatement()){
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
                 Order order = new Order();
@@ -166,24 +134,14 @@ public class OrderDaoImpl implements OrderDao{
             resultSet.close();
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
         }
         return orders;
     }
 
     public Set<Order> getMore25thWhithCustAndRep() {
         String sql = "SELECT ORDER_NUM,  AMOUNT, COMPANY , NAMЕ FROM ORDERS , CUSTOMERS , SALESREPS  WHERE CUST = CUST_NUM AND CUST_REP = EMPL_NUM    AND AMОUNT > 25000.00";
-        Statement statement = null;
         Set<Order> orders = new HashSet<>();
-        try {
-            statement = connection.createStatement();
+        try (Statement statement =holder.obtainConnection().createStatement()){
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
                 Order order = new Order();
@@ -202,14 +160,6 @@ public class OrderDaoImpl implements OrderDao{
             resultSet.close();
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
         }
         return orders;
     }
@@ -217,10 +167,8 @@ public class OrderDaoImpl implements OrderDao{
 
     public Set<Order> getWithNewSalesrep() {
         String sql = "SELECT  ORDER_NUM, AMOUNT, ORDER_DATE , NAMЕ FROM ORDERS, SALESREPS WHERE ORDER_DATE = HIRE_DATE";
-        Statement statement = null;
         Set<Order> orders = new HashSet<>();
-        try {
-            statement = connection.createStatement();
+        try (Statement statement =holder.obtainConnection().createStatement()){
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
                 Order order = new Order();
@@ -236,34 +184,18 @@ public class OrderDaoImpl implements OrderDao{
             resultSet.close();
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
         }
         return orders;
     }
 
     private boolean executeSql(String sql) {
         int count = 0;
-        Statement statement = null;
-        try {
-            statement = connection.createStatement();
+
+        try (Statement statement =holder.obtainConnection().createStatement()){
+
             count = statement.executeUpdate(sql);
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
         }
         return count == 1;
     }

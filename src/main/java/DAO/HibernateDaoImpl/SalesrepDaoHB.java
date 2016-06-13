@@ -1,4 +1,4 @@
-package DAO.DAOImpl;
+package DAO.HibernateDaoImpl;
 
 import DAO.SpecialDao.SalesrepDao;
 import models.Office;
@@ -14,11 +14,12 @@ import java.util.Set;
 /**
  * Created by appleface on 26.05.16.
  */
-public class SalesrepDaoImpl implements SalesrepDao{
-    private final Connection connection;
+public class SalesrepDaoHB implements SalesrepDao{
 
-    public SalesrepDaoImpl(Connection connection) {
-        this.connection = connection;
+    private final SessionHolder holder;
+
+    SalesrepDaoHB(SessionHolder holder) {
+        this.holder = holder;
     }
 
 
@@ -43,9 +44,9 @@ public class SalesrepDaoImpl implements SalesrepDao{
     public Salesrep getById(int id) {
         String sql = String.format("select * from SALESREPS where EMPL_NUM=%d",
                 id);
-        Statement statement = null;
-        try {
-            statement = connection.createStatement();
+
+        try (Statement statement =holder.obtainConnection().createStatement()){
+
             ResultSet resultSet = statement.executeQuery(sql);
             Salesrep salesrep = null;
             if (resultSet.next()) {
@@ -63,24 +64,15 @@ public class SalesrepDaoImpl implements SalesrepDao{
             return salesrep;
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
         }
         return null;
     }
 
     public Set<Salesrep> getAll() {
         String sql = "select * from SALESREPS";
-        Statement statement = null;
+
         Set<Salesrep> salesreps = new HashSet<Salesrep>();
-        try {
-            statement = connection.createStatement();
+        try (Statement statement =holder.obtainConnection().createStatement()){
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
                 Salesrep salesrep = new Salesrep();
@@ -97,14 +89,6 @@ public class SalesrepDaoImpl implements SalesrepDao{
             resultSet.close();
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
         }
         return salesreps;
     }
@@ -112,10 +96,9 @@ public class SalesrepDaoImpl implements SalesrepDao{
 
     public Set<Salesrep> getWhithCityAndRegion(){
         String sql = "SELECT NAMЕ , CITY , REGION FROM SALESREPS , OFFICES WHERE REP_OFFICE = OFFICE";
-        Statement statement = null;
         Set<Salesrep> salesreps = new HashSet<Salesrep>();
-        try {
-            statement = connection.createStatement();
+        try(Statement statement =holder.obtainConnection().createStatement()) {
+
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
                 Salesrep salesrep = new Salesrep();
@@ -129,23 +112,13 @@ public class SalesrepDaoImpl implements SalesrepDao{
             resultSet.close();
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
         }
         return salesreps;
     }
     public Set<Salesrep> getWhithQuotaMoreOffice(){
         String sql = "SELECT NAMЕ, QUOTA, CITY, TARGET FROM  SALESREPS , OFFICES WHERE QUOTA > TARGET";
-        Statement statement = null;
         Set<Salesrep> salesreps = new HashSet<Salesrep>();
-        try {
-            statement = connection.createStatement();
+        try (Statement statement =holder.obtainConnection().createStatement()){
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
                 Salesrep salesrep = new Salesrep();
@@ -159,23 +132,15 @@ public class SalesrepDaoImpl implements SalesrepDao{
             resultSet.close();
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
         }
         return salesreps;
     }
-    public Set<Salesrep> getWhithSalesMore350th(){
+    public Set<Salesrep> getBySales350th(){
         String sql = "SELECT NАМЕ , SALES FROM SALESREPS WHERE SALES > 350000.00";
-        Statement statement = null;
+
         Set<Salesrep> salesreps = new HashSet<Salesrep>();
-        try {
-            statement = connection.createStatement();
+        try (Statement statement =holder.obtainConnection().createStatement()){
+
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
                 Salesrep salesrep = new Salesrep();
@@ -187,23 +152,13 @@ public class SalesrepDaoImpl implements SalesrepDao{
             resultSet.close();
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
         }
         return salesreps;
     }
     public Set<Salesrep> getWhithNameCitySales(){
         String sql = "SELECT NAMЕ, CITY, SALES FROM  SALESREPS , OFFICES ";
-        Statement statement = null;
         Set<Salesrep> salesreps = new HashSet<Salesrep>();
-        try {
-            statement = connection.createStatement();
+        try (Statement statement =holder.obtainConnection().createStatement()){
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
                 Salesrep salesrep = new Salesrep();
@@ -216,23 +171,14 @@ public class SalesrepDaoImpl implements SalesrepDao{
             resultSet.close();
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
         }
         return salesreps;
     }
     public Set<Salesrep> getWhithOffice(){
         String sql = "SELECT SALESREPS . * , CITY , REGION FROM SALESREPS, OFFICES WНERE REP_OFFICE = OFFICE";
-        Statement statement = null;
         Set<Salesrep> salesreps = new HashSet<Salesrep>();
-        try {
-            statement = connection.createStatement();
+        try(Statement statement =holder.obtainConnection().createStatement()) {
+
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
                 Salesrep salesrep = new Salesrep();
@@ -246,14 +192,6 @@ public class SalesrepDaoImpl implements SalesrepDao{
             resultSet.close();
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
         }
         return salesreps;
     }
@@ -262,20 +200,10 @@ public class SalesrepDaoImpl implements SalesrepDao{
 
     private boolean executeSql(String sql) {
         int count = 0;
-        Statement statement = null;
-        try {
-            statement = connection.createStatement();
+        try (Statement statement =holder.obtainConnection().createStatement()){
             count = statement.executeUpdate(sql);
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
         }
         return count == 1;
     }

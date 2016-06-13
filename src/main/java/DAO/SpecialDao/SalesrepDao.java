@@ -4,8 +4,7 @@ import DAO.Dao;
 import models.Salesrep;
 
 /**
- * Created by appleface on 12.06.16.
+ * Created by appleface on 13.06.16.
  */
-public interface SalesrepDao extends Dao<Salesrep> {
-
+public interface SalesrepDao extends Dao<Salesrep>{
 }

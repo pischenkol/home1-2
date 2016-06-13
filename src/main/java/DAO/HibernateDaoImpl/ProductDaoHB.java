@@ -1,4 +1,4 @@
-package DAO.DAOImpl;
+package DAO.HibernateDaoImpl;
 
 import DAO.SpecialDao.ProductDao;
 import models.Product;
@@ -13,12 +13,12 @@ import java.util.Set;
 /**
  * Created by appleface on 26.05.16.
  */
-public class ProductDaoImpl implements ProductDao{
+public class ProductDaoHB implements ProductDao{
 
-    private final Connection connection;
+    private final SessionHolder holder;
 
-    public ProductDaoImpl(Connection connection) {
-        this.connection = connection;
+    ProductDaoHB(SessionHolder holder) {
+        this.holder = holder;
     }
 
 
@@ -45,9 +45,9 @@ public class ProductDaoImpl implements ProductDao{
     public Product getById(int id) {
         String sql = String.format("select * from PRODUCTS where MFR_ID=%d",
                 id);
-        Statement statement = null;
-        try {
-            statement = connection.createStatement();
+
+        try (Statement statement =holder.obtainConnection().createStatement()){
+
             ResultSet resultSet = statement.executeQuery(sql);
             Product product = null;
             if (resultSet.next()) {
@@ -63,24 +63,15 @@ public class ProductDaoImpl implements ProductDao{
             return product;
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
         }
         return null;
     }
 
     public Set<Product> getAll() {
         String sql = "select * from PRODUCTS";
-        Statement statement = null;
         Set<Product> products = new HashSet<>();
-        try {
-            statement = connection.createStatement();
+        try (Statement statement =holder.obtainConnection().createStatement()){
+
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
                 Product product = new Product();
@@ -94,34 +85,17 @@ public class ProductDaoImpl implements ProductDao{
             resultSet.close();
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
         }
         return products;
     }
 
     private boolean executeSql(String sql) {
         int count = 0;
-        Statement statement = null;
-        try {
-            statement = connection.createStatement();
+        try (Statement statement = holder.obtainConnection().createStatement()){
+
             count = statement.executeUpdate(sql);
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
         }
         return count == 1;
     }

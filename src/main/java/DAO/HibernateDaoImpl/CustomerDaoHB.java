@@ -1,9 +1,12 @@
-package DAO.DAOImpl;
+package DAO.HibernateDaoImpl;
 
 import DAO.SpecialDao.CustomerDao;
 import models.Customer;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,12 +14,12 @@ import java.util.Set;
 /**
  * Created by appleface on 26.05.16.
  */
-public class CustomerDaoImpl implements CustomerDao{
+public class CustomerDaoHB implements CustomerDao{
 
-    private final Connection connection;
+    private final SessionHolder holder;
 
-    public CustomerDaoImpl(Connection connection) {
-        this.connection = connection;
+    CustomerDaoHB(SessionHolder holder) {
+        this.holder = holder;
     }
 
 
@@ -45,9 +48,8 @@ public class CustomerDaoImpl implements CustomerDao{
     public Customer getById(int id) {
         String sql = String.format("select CUST_NUM,COMPANY,CUST_REP,CREDIT_LIMIT from CUSTOMERS where CUST_NUM=%d",
                 id);
-        Statement statement = null;
-        try {
-            statement = connection.createStatement();
+        try(Statement statement =holder.obtainConnection().createStatement()) {
+
             ResultSet resultSet = statement.executeQuery(sql);
             Customer customer = null;
             if (resultSet.next()) {
@@ -61,24 +63,14 @@ public class CustomerDaoImpl implements CustomerDao{
             return customer;
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
         }
         return null;
     }
 
     public Set<Customer> getAll() {
         String sql = "select * from CUSTOMERS";
-        Statement statement = null;
        Set<Customer> customers = new HashSet<Customer>();
-        try {
-            statement = connection.createStatement();
+        try(Statement statement =holder.obtainConnection().createStatement()) {
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
                 Customer customer = new Customer();
@@ -91,22 +83,12 @@ public class CustomerDaoImpl implements CustomerDao{
             resultSet.close();
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
         }
         return customers;
     }
     public Customer get2103() {
         String sql = String.format("select CUST_NUM,COMPANY,CUST_REP,CREDIT_LIMIT from CUSTOMERS where CUST_NUM=2103");
-        Statement statement = null;
-        try {
-            statement = connection.createStatement();
+        try (Statement statement =holder.obtainConnection().createStatement()){
             ResultSet resultSet = statement.executeQuery(sql);
             Customer customer = null;
             if (resultSet.next()) {
@@ -120,14 +102,6 @@ public class CustomerDaoImpl implements CustomerDao{
             return customer;
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
         }
         return null;
 
@@ -135,20 +109,10 @@ public class CustomerDaoImpl implements CustomerDao{
 
     private boolean executeSql(String sql) {
         int count = 0;
-        Statement statement = null;
-        try {
-            statement = connection.createStatement();
+        try (Statement statement =holder.obtainConnection().createStatement()){
             count = statement.executeUpdate(sql);
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
         }
         return count == 1;
     }

@@ -1,4 +1,4 @@
-package DAO.DAOImpl;
+package DAO.JdbcDaoImpl;
 
 import DAO.SpecialDao.ManagerDao;
 import models.Manager;
@@ -6,7 +6,7 @@ import models.Manager;
 /**
  * Created by appleface on 06.06.16.
  */
-public class ManagerDaoImpl implements ManagerDao {
+public class ManagerDaoJdbc implements ManagerDao {
     @Override
     public boolean save(Manager objects) {
         return false;
